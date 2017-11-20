@@ -350,7 +350,7 @@ DECLARE_PER_CPU(char *, irq_stack_ptr);
 DECLARE_PER_CPU(unsigned int, irq_count);
 ```
 
-The first is the `irq_stack_ptr`. From the variable's name, it is obvious that this is a pointer to the top of the stack. The second - `irq_count` is used to check if a CPU is already on an interrupt stack or not. Initialization of the `irq_stack_ptr` is located in the `setup_per_cpu_areas` function in [arch/x86/kernel/setup_percpu.c](https://github.com/torvalds/linux/blob/16f73eb02d7e1765ccab3d2018e0bd98eb93d973/arch/x86/kernel/setup_percpu.c):
+The first is the `irq_stack_ptr`. From the variable's name, it is obvious that this is a pointer to the top of the stack. The second - `irq_count` is used to check if a CPU is already on an interrupt stack or not. Initialization of the `irq_stack_ptr` is located in the `setup_per_cpu_areas` function in [arch/x86/kernel/setup_percpu.c](https://github.com/torvalds/linux/blob/020aae3ee58c1af0e7ffc4e2cc9fe4dc630338cb/arch/x86/kernel/setup_percpu.c#L246):
 
 ```C
 void __init setup_per_cpu_areas(void)
@@ -364,7 +364,7 @@ for_each_possible_cpu(cpu) {
     ...
     per_cpu(irq_stack_ptr, cpu) =
             per_cpu(irq_stack_union.irq_stack, cpu) +
-            IRQ_STACK_SIZE - 64;
+            IRQ_STACK_SIZE;
     ...
     ...
     ...
